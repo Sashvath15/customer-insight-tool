@@ -1,4 +1,4 @@
-# app.py - FIXED FOR STREAMLIT CLOUD (Using sample file)
+# app.py - FULLY FIXED (No syntax errors)
 import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
@@ -6,7 +6,7 @@ import os
 
 # Page configuration MUST be first Streamlit command
 st.set_page_config(
-    page_config="Customer Insight Tool",
+    page_title="Customer Insight Tool",
     page_icon="📊",
     layout="wide"
 )
@@ -120,11 +120,17 @@ with tab2:
         
         st.subheader("Priority Breakdown")
         for i, (aspect, scores) in enumerate(sorted_aspects[:5]):
-            level = "🔴 CRITICAL" if i < 2 else "🟡 MEDIUM" if i < 4 else "🟢 LOW"
+            if i < 2:
+                level = "🔴 CRITICAL"
+            elif i < 4:
+                level = "🟡 MEDIUM"
+            else:
+                level = "🟢 LOW"
+            
             st.markdown(f"**{level} - {aspect.upper()}**")
             st.markdown(f"- Score: {scores['priority_score']:.3f}")
-            st.markdown(f- Mentions: {scores['total_mentions']} ({scores['frequency']*100:.1f}%)")
-            st.markdown(f- Avg Rating: {scores['avg_rating']:.1f}/5.0")
+            st.markdown(f"- Mentions: {scores['total_mentions']} ({scores['frequency']*100:.1f}%)")
+            st.markdown(f"- Avg Rating: {scores['avg_rating']:.1f}/5.0")
             st.markdown("---")
     else:
         st.info("Click 'Start Analysis' first")
